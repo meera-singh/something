@@ -1,0 +1,76 @@
+<div class="row">
+    <div class="col-md-3   col-md-offset-3 form-group">
+        <input class="form-control" #drp="bsDaterangepicker" name="datepickerrangeok" bsDaterangepicker [(ngModel)]="bsRangeValue">
+    </div>
+    <div class="col-md-3 form-group  ">
+        <button class="btn btn-success" (click)="drp.toggle()" (click)="datepickedright()">Date Range Csv Download</button>
+    </div>
+    <div class="col-md-3  form-grop">
+        <button class="btn btn-success" (click)="recentcsv()">Recent Csv Download</button>
+    </div>
+</div>
+
+<div class="container-fluid" style="margin-top: 25px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive ">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+
+                            <th style="width:45%">Date</th>
+                            <th style="width:45%">Task</th>
+                            <th style="width:45%">Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let task of alltaskofselecteduser">
+                            <td style="vertical-align:middle">
+                                {{task.date| date: 'shortDate'}}
+                            </td>
+                            <td>
+                                <tr *ngFor="let x of task.details">
+                                    <td>{{x.task}}</td>
+                                </tr>
+                            </td>
+                            <td>
+                                <tr *ngFor="let x of task.details">
+                                    <td>{{x.time}}</td>
+                                </tr>
+                            </td>
+                        </tr>
+                        
+                        
+                    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid" style="margin-top: 25px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive ">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>completion date</th>
+                            <th>assigned Task</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let assigned of allassignedofselecteduser">
+                            <td >
+                                {{assigned.completedAt|date:'shortDate'}}
+                            </td>
+                            <td>
+                          {{assigned.task}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>            

@@ -1,0 +1,65 @@
+<!-- Login form -->
+<div class="page-header">
+    <div class="container">
+        <div class="navLinks">
+            <button class="btn btn-default waves-light" mdbRippleRadius [routerLink]="['/user']">User</button>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row ">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="well">
+                <form #loginForm="ngForm">
+                    <div class="row">
+                        <div class=" col-md-12 center form-group">
+                            <div class="row">
+                                <div class="col-md-10 col-md-offset-1 form-group">
+                                    <p class="h2 text-center">Admin Sign in</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-10 col-md-offset-1 form-group">
+                            <i class="fa fa-envelope prefix grey-text"></i>
+                            <label for="email" class="control-label">Email</label>
+                            <input placeholder="Your email" type="text" id="defaultForm-email" class="form-control" name="email"
+                            pattern="^([A-Za-z0-9_\-\.]){1,}\@([A-Za-z0-9_\-\.]){1,}\.([A-Za-z]{2,4})$" 
+                             mdbActive [(ngModel)]="email" #eml="ngModel" required>
+                            <div *ngIf="eml.errors">
+                                <small *ngIf="eml.errors.required && eml.touched" class="text-danger">Email is required</small>
+                                <small *ngIf="eml.errors.pattern && eml.touched" class="text-danger">Invalid email</small>
+
+                            </div>
+                        </div>
+                        <div class="col-md-10 col-md-offset-1 form-group">
+                            <i class="fa fa-lock prefix grey-text"></i>
+                            <label for="password" class="control-label">Password</label>
+                            <input type="password" placeholder="Your password" id="defaultForm-pass" class="form-control" name="passsword" #pwd="ngModel"  mdbActive [(ngModel)]="password" required>
+                            <div *ngIf="pwd.errors">
+                                <small *ngIf="pwd.errors.required && pwd.touched" class="text-danger">Password is required</small>
+
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button mdbRippleRadius type="reset" class="btn btn-deep-orange center-block waves-light"> Reset</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button [disabled]="loginForm.invalid" class="btn btn-success center-block " mdbRippleRadius (click)="login()">Sign in</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-11 col-md-offset-1">
+                                    <small *ngIf=" loginError" class="text-danger">{{loginError}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

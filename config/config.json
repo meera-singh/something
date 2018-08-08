@@ -1,0 +1,7 @@
+{
+    "development": {
+        "MONGO_URI": "mongodb://rajatk32:plmnko09876@ds161026.mlab.com:61026/timetask",
+        "PORT": 8000,
+        "SECRET": "D3V3L0PM3N7"
+    }
+}

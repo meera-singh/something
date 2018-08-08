@@ -1,0 +1,71 @@
+<!--/Register form-->
+<div class="container">
+    <div class="row ">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="well">
+                <form #signUpForm="ngForm">
+                    <div class="row">
+                        <div class=" col-md-12 center form-group">
+                            <div class="row">
+                                <div class="col-md-10 col-md-offset-1 form-group">
+                                    <p class="h2 text-center">User Sign up</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-10 col-md-offset-1 form-group">
+                            <i class="fa fa-user prefix grey-text"></i>
+                            <label for="email" class="control-label">Name</label>
+                            <input placeholder="Your name" type="text" id="name" class="form-control" name="name" mdbActive [(ngModel)]="name" #nme="ngModel" minlength="4" required>
+                            <div *ngIf="nme.errors">
+                                <small *ngIf="nme.errors.required && nme.touched" class="text-danger">Name is required</small>
+                                <small *ngIf="nme.errors.minlength && nme.touched" class="text-danger">Minimum length is 4 charcters</small>
+                            </div>
+
+                        </div>
+                        <div class="col-md-10 col-md-offset-1 form-group">
+                            <i class="fa fa-envelope prefix grey-text"></i>
+                            <label for="email" class="control-label">Email</label>
+                            <input placeholder="Your email" type="text" id="defaultForm-email"
+                            pattern="^([A-Za-z0-9_\-\.]){1,}\@([A-Za-z0-9_\-\.]){1,}\.([A-Za-z]{2,4})$"
+                             class="form-control" name="email" mdbActive [(ngModel)]="email" #eml="ngModel"  required>
+                            <div *ngIf="eml.errors">
+                                <small *ngIf="eml.errors.required && eml.touched" class="text-danger">Email is required</small>
+                                <small *ngIf="eml.errors.pattern && eml.touched" class="text-danger">Invalid email </small>
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-10 col-md-offset-1 form-group">
+                            <i class="fa fa-lock prefix grey-text"></i>
+                            <label for="password" class="control-label">Password</label>
+                            <input type="password" placeholder="Your password" id="defaultForm-pass" class="form-control" name="passsword" #pwd="ngModel" mdbActive [(ngModel)]="password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$" required>
+                            <div *ngIf="pwd.errors">
+                                <small *ngIf="pwd.errors.required && pwd.touched" class="text-danger">Password is required</small>
+
+                                <small *ngIf=" pwd.errors.pattern && pwd.touched" class="text-danger">Minimum 6 characters, at least one letter, one No. and one Special character</small>
+                            </div>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <div class="row">
+                                <div class="col-md-3 col-md-offset-1">
+                                    <button routerLink="/user/signin" mdbRippleRadius class="btn btn-deep-orange  waves-light"> Sign in</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-link px-0" routerLink="/user/signin/forgot">Forgot password?</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button mdbRippleRadius class="btn btn-deep-orange center-block waves-light" [disabled]="signUpForm.invalid" class="btn btn-success" (click)=reg()> Sign up</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-11 col-md-offset-1">
+                                    <small *ngIf=" SignupError" class="text-danger">{{SignupError}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

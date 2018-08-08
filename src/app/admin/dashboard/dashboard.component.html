@@ -1,0 +1,127 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="navbar-text">Current Time : {{currentTime}} </li>
+                <li class="navbar-text">Current Date : {{currentDate}} </li>
+                <li class="navbar-text">Current Day : {{dateString}} </li>
+            </ul>
+            <div class="navbar-right" style="margin-left:5px;" dropdown>
+                    <a class="nav-link" (click)="myModal.show()" ><mark><b>Assign Task</b></mark></a>
+                <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle navbar-btn">
+                            <i class="fa fa-ellipsis-v"></i>
+                        </button>
+                <ul *dropdownMenu class="dropdown-menu" role="menu">
+                    <li role="menuitem"><a class="dropdown-item" mdbRippleRadius (click)="logout()">Logout</a></li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<div bsModal #myModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left"><b>Add new task</b></h4>
+                    <button type="button" class="close pull-right" (click)="myModal.hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="well">
+                        <form #taskForm="ngForm" >
+                                <div class="row">
+                                    
+            
+                                    <div class="col-md-10 col-md-offset-1 form-group">
+                                        <i class="fa fa-user prefix grey-text"></i>
+                                        <label for="user" class="control-label">Select user</label>
+                                        <div >
+                                            <select name="user" class="form-control" #user1="ngModel" id="user1" [(ngModel)]="user" required>
+                                                <option value="" disabled>Select user</option>
+                                                <option *ngFor="let task of logindata" [value]="task.email">{{task.email}}</option>
+                                            </select>
+                                            <div *ngIf="user1.errors">
+                                                <small *ngIf="user1.errors.required && user1.touched" class="text-danger">User field is required</small>
+                                            </div>
+                                        </div>
+            
+                                    </div>
+                                    <div class="col-md-10 col-md-offset-1 form-group">
+                                        
+                                        <label for="status" class="control-label">Task Repetition</label>
+                                        <div>
+                                            <select name="status" class="form-control" #status1="ngModel" id="status" [(ngModel)]="status" required>
+                                                <option value="" disabled>Select task repetition</option>
+                                                <option value="1" >week working days </option>
+                                                <option value="2" >alternate days MWf</option>
+                                                <option value="3" > alternate days TTS</option>
+                                                
+                                            </select>
+                                            <div *ngIf="status1.errors">
+                                                <small *ngIf="status1.errors.required && status1.touched" class="text-danger">This feild is required</small>
+                                            </div>
+                                        </div>
+                                        
+            
+                                    </div>
+                                    <div class="col-md-10 col-md-offset-1 form-group">
+                                        <label for="status" class="control-label">Start Date</label> 
+                                        <div>
+                                           <input type="text" id="date" name="date" class="form-control" 
+                                                
+                                                 #dp="bsDatepicker"  bsDatepicker [(bsValue)]="bsValue1">
+                                                 <div>
+                                                     <small  class="text-info">* If start date is not provided current date will be assigned to task </small>
+                                                 </div>
+                                        </div> 
+                                </div>
+                                    <div class="col-md-10 col-md-offset-1 form-group">
+                                            <label for="status" class="control-label">End date</label> 
+                                            <div>
+                                               <input type="text" id="date" name="date" class="form-control" 
+                                                    
+                                                     #dp="bsDatepicker" bsDatepicker [(bsValue)]="bsValue" placement="top">
+                                                     <div>
+                                                         <small  class="text-info"> * if end date is not provided task will not end </small>
+                                                     </div>
+                                            </div> 
+                                    </div>
+                                    <div class="col-md-10 col-md-offset-1 form-group">
+                                            <label for="submit1" class="control-label">Task Name</label>
+                                            <div>
+                                                <input type="text" name="submit1" class="form-control" id="submit1" #submit1="ngModel" minlength="5" [(ngModel)]="submit" required>
+                                                <div *ngIf="submit1.errors">
+                                                        <small *ngIf="submit1.errors.required && submit1.touched" class="text-danger">Task name is required</small>
+                                                        <small *ngIf="submit1.errors.minlength && submit1.touched" class="text-danger">5 characters are required</small>
+                                                 </div>
+                                            </div>
+                                    </div>       
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6 col-md-offset-1">
+                                                <button type="reset"  class="btn btn-warning">Reset</button>
+                                                <button type="submit" (click)="logtask()"  [disabled]="taskForm.invalid" class="btn btn-success">Log task</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                           </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+<div class="container">
+    <router-outlet></router-outlet>
+</div>

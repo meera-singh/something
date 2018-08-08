@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="row ">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="well">
+                <form #loginForm="ngForm">
+                    <div class="row">
+                        <div class=" col-md-12 center form-group">
+                            <div class="row">
+                                <div class="col-md-10 col-md-offset-1 form-group">
+                                    <p class="h2 text-center">Account Recovery</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-md-offset-1 form-group">
+                            <h3>Get a verification code</h3>
+                        </div>
+                        <div class="col-md-11 col-md-offset-1 form-group">
+                            <p> To get a verification code, first enter the email address</p>
+                        </div>
+                        <div class="col-md-10 col-md-offset-1 form-group">
+                            <i class="fa fa-envelope prefix grey-text"></i>
+                            <label for="email" class="control-label">email </label>
+                            <input placeholder="Your email" type="text" id="defaultForm-email" #emal="ngModel" class="form-control" name="email" mdbActive [(ngModel)]="email" required>
+                            <div *ngIf="emal.errors">
+                                <small *ngIf="emal.errors.required && emal.touched" class="text-danger">Email is required</small>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4 col-md-offset-5">
+                                    <button class="btn btn-default center-block waves-light" [disabled]="loginForm.invalid" class="btn btn-success" mdbRippleRadius (click)="forgotpassword()">Send</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-11 col-md-offset-1">
+                                    <small *ngIf=" loginError" class="text-danger">{{loginError}}</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

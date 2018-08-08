@@ -1,0 +1,200 @@
+
+<div class="row justify-content-center">
+        <div *ngIf="check" class="col-sm-3 col-xs-3">
+                <div class="well">
+                        <h2>Assigned Task Info</h2>
+                        <small class="text-info">Task completion time will be based on an interval bw starting dotes and ending dotes of task</small>
+                          <ul>
+                              <li class="text-info">Blue Dots:weeks days task </li>
+                              <li class="text-danger">Red Dots: MWF days task</li>
+                              <li class="text-warning">Yellow Dots: TTS days task</li>
+                          </ul>
+                </div>
+         </div>
+    <div class="col-sm-12 col-xs-12" *ngIf="!check">
+            <mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate">
+                </mwl-demo-utils-calendar-header>
+        
+                <div class="alert alert-info">
+                    Click on a day on the view.
+                    <strong *ngIf="clickedDate" ngDefaultControl>You clicked on this day: {{ clickedDate | date:'shortDate' }}</strong>
+                </div>
+        
+                <div [ngSwitch]="view">
+                    <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" (click)="getdata1()" (click)="fun1()"  [events]="events" (dayClicked)="clickedDate = bsValue = $event.day.date; lgModal2.show()">
+                        
+                    </mwl-calendar-month-view>
+                    <mwl-calendar-week-view *ngSwitchCase="'week'" (dayHeaderClicked)="clickedDate= bsValue  = $event.day.date" (click)="getdata1()" [viewDate]="viewDate" [events]="events">
+                    </mwl-calendar-week-view>
+                    
+                </div>
+       
+    </div>
+    <div class="col-sm-9 col-xs-9" *ngIf="check">
+            <mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate">
+                </mwl-demo-utils-calendar-header>
+        
+                <div class="alert alert-info">
+                    Click on a day on the view.
+                    <strong *ngIf="clickedDate" ngDefaultControl>You clicked on this day: {{ clickedDate | date:'shortDate' }}</strong>
+                </div>
+        
+                <div [ngSwitch]="view">
+                    <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" (click)="getdata1()" (click)="fun1()"  [events]="events" (dayClicked)="clickedDate = bsValue = $event.day.date; lgModal2.show()">
+                        
+                    </mwl-calendar-month-view>
+                    <mwl-calendar-week-view *ngSwitchCase="'week'" (dayHeaderClicked)="clickedDate= bsValue  = $event.day.date" (click)="getdata1()" [viewDate]="viewDate" [events]="events">
+                    </mwl-calendar-week-view>
+                    
+                </div>
+    </div>
+</div>
+<button class="btn btn-info" (click)="lgModal.show()" (click)="getdata1()"  (click)="fun1()" style="border-radius: 50%; position: fixed; bottom: 5%; right: 5%; padding: 10px" title="Add new task"><i style="width: 28px; height: 28px" class="fa fa-plus fa-2x" aria-hidden="true" (click)="fun1()" (click)="lgModal.show()"></i></button>
+<div bsModal #lgModal2="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Log Assigned task</h4>
+                    <button type="button" class="close pull-right" (click)="lgModal2.hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <form #taskForm2="ngForm">
+                            
+                                    
+                        
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-2 col-md-offset-1">
+                                    <label for="assignedtask">Select Task</label>
+                                </div>
+                                <div class="col-md-8">
+                                        <select name="assignedtask" class="form-control" #task1="ngModel" id="task" [(ngModel)]="Task" required>
+                                        <option value="" disabled>Select task </option>
+                                        <option value="" *ngIf="!check">No tasks assigned yet</option>
+                                        <option [value]="task.id" *ngFor="let task of taskname" >{{task.task}}</option>
+                                        </select>
+                                    <div *ngIf="task1.errors">
+                                        <small *ngIf="task1.errors.required && task1.touched" class="text-danger">Task is required</small>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-md-offset-1">
+                                    <button type="reset"  class="btn btn-warning">Reset</button>
+                                    <button type="submit" (click)="postdata1()" [disabled]="taskForm2.invalid" class="btn btn-success">Log task</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<!-- modal ends -->
+<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Add new task</h4>
+                <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form #taskForm="ngForm">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-2 col-md-offset-1">
+                                <label for="date">Date: </label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="date" name="date" class="form-control" [minDate]="minDate" [maxDate]="maxDate" #dp="bsDatepicker" bsDatepicker [(bsValue)]="bsValue" (bsValueChange)="dateChanged()">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-2 col-md-offset-1">
+                                <label for="time">Time: </label>
+                            </div>
+                            <div class="col-md-8">
+                                <select name="timeslot" class="form-control" #timeslot="ngModel" id="time" [(ngModel)]="mytime" required>
+                                    <option value="" disabled>Select time slot</option>
+                                    <option value="9-10" [disabled]="timeSlotsUsed && timeSlotsUsed.indexOf('9-10') != -1">9 AM - 10 AM</option>
+                                    <option value="10-11" [disabled]="timeSlotsUsed && timeSlotsUsed.indexOf('10-11') != -1">10 AM - 11 AM</option>
+                                    <option value="11-12" [disabled]="timeSlotsUsed && timeSlotsUsed.indexOf('11-12') != -1">11 AM - 12 PM</option>
+                                    <option value="12-1" [disabled]="timeSlotsUsed && timeSlotsUsed.indexOf('12-1') != -1">12 PM - 1 PM</option>
+                                    <option value="1-2" [disabled]="timeSlotsUsed && timeSlotsUsed.indexOf('1-2') != -1">1 PM - 2 PM</option>
+                                    <option value="2-3" [disabled]="timeSlotsUsed && timeSlotsUsed.indexOf('2-3') != -1">2 PM - 3 PM</option>
+                                    <option value="3-4" [disabled]="timeSlotsUsed && timeSlotsUsed.indexOf('3-4') != -1">3 PM - 4 PM</option>
+                                    <option value="4-5" [disabled]="timeSlotsUsed && timeSlotsUsed.indexOf('4-5') != -1">4 PM - 5 PM</option>
+                                    <option value="5-6" [disabled]="timeSlotsUsed && timeSlotsUsed.indexOf('5-6') != -1">5 PM - 6 PM</option>
+                                </select>
+                                <div *ngIf="timeslot.errors">
+                                    <small *ngIf="timeslot.errors.required && timeslot.touched" class="text-danger">Time is required</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-2 col-md-offset-1">
+                                <label for="submit-task">Task</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="task" placeholder="Enter task" #task="ngModel" minlength="5" class="form-control" name="submit-task" [(ngModel)]="submit" required>
+                                <div *ngIf="task.errors">
+                                    <small *ngIf="task.errors.required && task.touched" class="text-danger">Task is required</small>
+                                    <small *ngIf=" task.errors.minlength && task.touched" class="text-danger">Minimum 5 characters are required</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-1">
+                                <button type="reset" (click)="res()" class="btn btn-warning">Reset</button>
+                                <button type="submit" (click)="postdata()" [disabled]="taskForm.invalid" class="btn btn-success">Log task</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" style="margin-top: 25px" *ngIf="view == 'week'">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive ">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width:10%">#</th>
+                            <th style="width:45%">Time</th>
+                            <th style="width:45%">Task</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngIf="selectdatetasks == undefined; else elseBlock">
+                            <td colspan="3" style="text-align:center">No tasks entered yet</td>
+                        </tr>
+                        <ng-template #elseBlock>
+                            <tr *ngFor="let task of selectdatetasks.details; let i = index">
+                                <td>{{i+1}}</td>
+                                <td>{{task.time}}</td>
+                                <td>{{task.task}}</td>
+                            </tr>
+                        </ng-template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <input [id]="myId" [style.color]="'orange'" type="text" value="Vishwas"> -->
+<!-- <mwl-calendar-week-view *ngSwitchCase="'week'" (dayHeaderClicked)="clickedDate = viewDate = $event.day.date; view = 'day'" (click)="getdata1()" [viewDate]="viewDate" [events]="events"> -->
